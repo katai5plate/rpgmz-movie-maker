@@ -1,0 +1,28 @@
+{
+  "name": "rpgmz-movie-maker",
+  "version": "1.0.0",
+  "description": "ツクールMZ専用ムービーメーカー",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/katai5plate/rpgmz-movie-maker.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/katai5plate/rpgmz-movie-maker/issues"
+  },
+  "homepage": "https://github.com/katai5plate/rpgmz-movie-maker#readme",
+  "dependencies": {
+    "@theatre/core": "^0.7.0",
+    "@theatre/studio": "^0.7.0",
+    "@types/node": "^20.10.6",
+    "pixi.js": "^7.3.3",
+    "vite": "^5.0.11"
+  }
+}
