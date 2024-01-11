@@ -38,17 +38,17 @@ const observeDOMChanges = (selector, rootSelector, callback) => {
   checkAndObserve();
 };
 
-const watchAndReplace = (selector, replaceFunction) => {
-  observeDOMChanges(selector, "#theatrejs-studio-root", (node) => {
-    if (node.matches && node.matches(selector)) {
-      node.innerHTML = replaceFunction(node.innerHTML);
-    } else if (node.querySelectorAll) {
-      node.querySelectorAll(selector).forEach((childNode) => {
-        childNode.innerHTML = replaceFunction(childNode.innerHTML);
-      });
-    }
-  });
-};
+// const watchAndReplace = (selector, replaceFunction) => {
+//   observeDOMChanges(selector, "#theatrejs-studio-root", (node) => {
+//     if (node.matches && node.matches(selector)) {
+//       node.innerHTML = replaceFunction(node.innerHTML);
+//     } else if (node.querySelectorAll) {
+//       node.querySelectorAll(selector).forEach((childNode) => {
+//         childNode.innerHTML = replaceFunction(childNode.innerHTML);
+//       });
+//     }
+//   });
+// };
 
 const watchAndEdit = (selector, editFunction) => {
   observeDOMChanges(selector, "#theatrejs-studio-root", (node) => {
@@ -68,7 +68,173 @@ const app = new PIXI.Application({
 
 document.body.appendChild(app.view);
 
-const project = getProject(document.title);
+const project = getProject(document.title, {
+  state: {
+    sheetsById: {
+      レイヤー: {
+        staticOverrides: {
+          byObject: {
+            名刺: {
+              pos: {
+                y: 188,
+                x: 542,
+              },
+              angle: -7,
+              origin: "s",
+            },
+            ボタン3: {
+              tint: {
+                r: 1,
+                g: 1,
+                b: 1,
+                a: 0.53,
+              },
+            },
+          },
+        },
+        sequence: {
+          subUnitsPerUnit: 30,
+          length: 10,
+          type: "PositionalSequence",
+          tracksByObject: {
+            名刺: {
+              trackData: {
+                z85FF0s4Gh: {
+                  type: "BasicKeyframedTrack",
+                  __debugName: '名刺:["angle"]',
+                  keyframes: [
+                    {
+                      id: "BDSS81Y0dL",
+                      position: 0,
+                      connectedRight: true,
+                      handles: [0.5, 1, 0.5, 0],
+                      type: "bezier",
+                      value: 388,
+                    },
+                    {
+                      id: "P7mL5mM00X",
+                      position: 1.467,
+                      connectedRight: true,
+                      handles: [
+                        0.11656441717791415, 0.8637777777777778, 0.5, 0,
+                      ],
+                      type: "bezier",
+                      value: -14.278243555555562,
+                    },
+                  ],
+                },
+                vT4IDuGOKL: {
+                  type: "BasicKeyframedTrack",
+                  __debugName: '名刺:["pos","x"]',
+                  keyframes: [
+                    {
+                      id: "pDtCgSUmkO",
+                      position: 0,
+                      connectedRight: true,
+                      handles: [0.5, 1, 0.5, 0],
+                      type: "bezier",
+                      value: 1034,
+                    },
+                    {
+                      id: "jUlELruhrq",
+                      position: 1.467,
+                      connectedRight: true,
+                      handles: [0, 1.08, 0.5, 0],
+                      type: "bezier",
+                      value: 569,
+                    },
+                  ],
+                },
+              },
+              trackIdByPropPath: {
+                '["angle"]': "z85FF0s4Gh",
+                '["pos","x"]': "vT4IDuGOKL",
+              },
+            },
+            文章窓: {
+              trackData: {
+                IyfmbANeya: {
+                  type: "BasicKeyframedTrack",
+                  __debugName: '文章窓:["scale","ofs","x"]',
+                  keyframes: [
+                    {
+                      id: "EhMYi7KxkY",
+                      position: 0,
+                      connectedRight: true,
+                      handles: [0.5, 1, 0.5, 0],
+                      type: "bezier",
+                      value: 0,
+                    },
+                  ],
+                },
+                R7FwRPKMgS: {
+                  type: "BasicKeyframedTrack",
+                  __debugName: '文章窓:["scale","ofs","y"]',
+                  keyframes: [],
+                },
+                POq1Rbj6V4: {
+                  type: "BasicKeyframedTrack",
+                  __debugName: '文章窓:["scale","xy"]',
+                  keyframes: [
+                    {
+                      id: "vNDJbEZ5Wq",
+                      position: 0,
+                      connectedRight: true,
+                      handles: [0.5, 1, 0.5, 0],
+                      type: "bezier",
+                      value: 0,
+                    },
+                    {
+                      id: "08w2s9JnAz",
+                      position: 0.433,
+                      connectedRight: true,
+                      handles: [0.5, 1, 0.5, 0],
+                      type: "bezier",
+                      value: 1,
+                    },
+                  ],
+                },
+              },
+              trackIdByPropPath: {
+                '["scale","ofs","x"]': "IyfmbANeya",
+                '["scale","ofs","y"]': "R7FwRPKMgS",
+                '["scale","xy"]': "POq1Rbj6V4",
+              },
+            },
+            ボタン1: {
+              trackData: {
+                xhn4agpu2T: {
+                  type: "BasicKeyframedTrack",
+                  __debugName: 'ボタン1:["tint"]',
+                  keyframes: [
+                    {
+                      id: "q4cofyx5Sh",
+                      position: 0,
+                      connectedRight: true,
+                      handles: [0.5, 1, 0.5, 0],
+                      type: "bezier",
+                      value: {
+                        r: 0.9882352941176471,
+                        g: 0.9411764705882353,
+                        b: 0,
+                        a: 1,
+                      },
+                    },
+                  ],
+                },
+              },
+              trackIdByPropPath: {
+                '["tint"]': "xhn4agpu2T",
+              },
+            },
+          },
+        },
+      },
+    },
+    definitionVersion: "0.4.0",
+    revisionHistory: ["yDNhHSHp2qYJjYDC"],
+  },
+});
 const sheet = project.sheet("レイヤー", "ピクチャ");
 
 console.log(
@@ -108,8 +274,6 @@ studio.initialize();
 
 const container = new PIXI.Container();
 app.stage.addChild(container);
-
-console.log();
 
 class Picture {
   constructor(name, href, { corner, x, y } = {}) {
@@ -214,7 +378,11 @@ class Picture {
 }
 
 const pictures = [
-  new Picture("名刺", "./pictures/meishi.png", { corner: true, x: 384, y: 72 }),
+  new Picture("文章窓", "./pictures/meswin.png", {
+    corner: true,
+    x: 0,
+    y: 384,
+  }),
   new Picture("ボタン1", "./pictures/button.png", {
     corner: true,
     x: 24,
@@ -230,31 +398,32 @@ const pictures = [
     x: 24,
     y: 264,
   }),
-  new Picture("文章窓", "./pictures/meswin.png", {
-    corner: true,
-    x: 0,
-    y: 384,
-  }),
+  new Picture("名刺", "./pictures/meishi.png", { corner: true, x: 384, y: 72 }),
 ];
 
 pictures.forEach((picture) => {
   container.addChild(picture.sprite);
 });
 
-watchAndReplace("#pointer-root > div > div.sc-dcJsrY.cxwChO > div", (html) =>
-  html
-    .replace("Docs", "Theatre.js の説明書")
-    .replace("Changelog", "Theatre.js の履歴")
-    .replace("Github", "Theatre.js の GitHub")
-    .replace("Twitter", "Theatre.js の Twitter")
-    .replace("Discord", "Theatre.js の Discord")
-    .replace("Version", "Theatre.js")
-    .replace("No notifications", "問題なし")
-    .replace(
-      "Notifications will appear here when you get them.",
-      "何か問題が発生したらここに表示されます"
-    )
-);
+watchAndEdit("#pointer-root > div > div.sc-dcJsrY.cxwChO > div", (node) => {
+  [...node.childNodes].forEach((child) => {
+    Object.entries({
+      Docs: "Theatre.js の説明書",
+      Changelog: "Theatre.js の履歴",
+      Github: "Theatre.js の GitHub",
+      Twitter: "Theatre.js の Twitter",
+      Discord: "Theatre.js の Discord",
+      Version: "Theatre.js",
+      // "No notifications": "問題なし",
+      // "Notifications will appear here when you get them.":
+      //   "何か問題が発生したらここに表示されます",
+      "No notificationsNotifications will appear here when you get them.":
+        "何か問題が発生したらここに表示されます",
+    }).forEach(([before, after]) => {
+      if (child.textContent === before) child.textContent = after;
+    });
+  });
+});
 watchAndEdit("#pointer-root > div > div.sc-dPZUQH.dCKgVu > div", (node) => {
   try {
     node.querySelector("a").textContent = "Theatre.js の関連ページを開く";
@@ -294,7 +463,6 @@ watchAndEdit("#pointer-root > div > div.sc-dcJsrY.cxwChO > ul", (node) => {
     });
   });
 });
-// p:nth-child(2)
 watchAndEdit("#pointer-root > div > div.sc-dcJsrY.cxwChO > div", (node) => {
   [...node.childNodes].forEach((child) => {
     Object.entries({
