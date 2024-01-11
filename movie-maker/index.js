@@ -61,8 +61,8 @@ const watchAndEdit = (selector, editFunction) => {
 };
 
 const app = new PIXI.Application({
-  width: 800,
-  height: 600,
+  width: 816,
+  height: 624,
   background: "#1099bb",
 });
 
@@ -76,34 +76,34 @@ console.log(
     localStorage.getItem(
       Object.keys(localStorage).find((x) => /theatre/.test(x))
     )
-  )
+  )?.historic.innerState.coreByProject.Document
 );
 
-studio.extend({
-  id: "hello-world-extension",
-  toolbars: {
-    global(set, studio) {
-      set([
-        {
-          type: "Icon",
-          title: "Example Button",
-          svgSource: "🍕",
-          onClick: () => {},
-        },
-      ]);
-      return () => console.log("toolbar removed!");
-    },
-  },
-  panes: [
-    {
-      class: "example",
-      mount({ paneId, node }) {
-        studio.ui.renderToolset("exampleToolbar", node);
-        return () => console.log("pane closed!");
-      },
-    },
-  ],
-});
+// studio.extend({
+//   id: "hello-world-extension",
+//   toolbars: {
+//     global(set, studio) {
+//       set([
+//         {
+//           type: "Icon",
+//           title: "Example Button",
+//           svgSource: "🍕",
+//           onClick: () => {},
+//         },
+//       ]);
+//       return () => console.log("toolbar removed!");
+//     },
+//   },
+//   panes: [
+//     {
+//       class: "example",
+//       mount({ paneId, node }) {
+//         studio.ui.renderToolset("exampleToolbar", node);
+//         return () => console.log("pane closed!");
+//       },
+//     },
+//   ],
+// });
 studio.initialize();
 
 const container = new PIXI.Container();
@@ -112,13 +112,13 @@ app.stage.addChild(container);
 console.log();
 
 class Picture {
-  constructor(name, href) {
+  constructor(name, href, { corner, x, y } = {}) {
     this.name = name;
     this.href = href;
     this.sprite = PIXI.Sprite.from(href);
 
     this.obj = sheet.object(name, {
-      origin: types.stringLiteral("s", {
+      origin: types.stringLiteral(corner ? "q" : "s", {
         q: "┌ top left",
         w: "↑ top center",
         e: "┐ top right",
@@ -131,8 +131,8 @@ class Picture {
       }),
       pos: {
         grid: types.number(1, { range: [0, Infinity] }),
-        x: types.number(200, { nudgeMultiplier: 1 }),
-        y: types.number(100, { nudgeMultiplier: 1 }),
+        x: types.number(x ?? 200, { nudgeMultiplier: 1 }),
+        y: types.number(y ?? 200, { nudgeMultiplier: 1 }),
         ofs: {
           x: types.number(0, { nudgeMultiplier: 1 }),
           y: types.number(0, { nudgeMultiplier: 1 }),
@@ -214,7 +214,27 @@ class Picture {
 }
 
 const pictures = [
-  new Picture("Test", "https://pixijs.com/assets/flowerTop.png"),
+  new Picture("名刺", "./pictures/meishi.png", { corner: true, x: 384, y: 72 }),
+  new Picture("ボタン1", "./pictures/button.png", {
+    corner: true,
+    x: 24,
+    y: 24,
+  }),
+  new Picture("ボタン2", "./pictures/button.png", {
+    corner: true,
+    x: 24,
+    y: 144,
+  }),
+  new Picture("ボタン3", "./pictures/button.png", {
+    corner: true,
+    x: 24,
+    y: 264,
+  }),
+  new Picture("文章窓", "./pictures/meswin.png", {
+    corner: true,
+    x: 0,
+    y: 384,
+  }),
 ];
 
 pictures.forEach((picture) => {
@@ -235,15 +255,29 @@ watchAndReplace("#pointer-root > div > div.sc-dcJsrY.cxwChO > div", (html) =>
       "何か問題が発生したらここに表示されます"
     )
 );
+watchAndEdit("#pointer-root > div > div.sc-dPZUQH.dCKgVu > div", (node) => {
+  try {
+    node.querySelector("a").textContent = "Theatre.js の関連ページを開く";
+    node.querySelector("div > div:nth-child(2)").innerHTML =
+      "<u>インスペクタ</u>からピクチャを選択して、そのプロパティを確認してください。";
+  } catch {}
+});
+watchAndEdit(
+  "#pointer-root > div > div.sc-dPZUQH.dCKgVu > div.sc-lnPyaJ.gtHpBQ > div > div > button",
+  (node) => {
+    node.textContent = "JSON ファイルとして保存";
+  }
+);
 
 watchAndEdit("#pointer-root > div > div.sc-dcJsrY.cxwChO > ul", (node) => {
   [...node.childNodes].forEach((child) => {
     Object.entries({
-      "Reset all to default": "すべてデフォルトに戻す",
-      "Make all static": "すべて固定値にする",
-      "Sequence all": "すべてアニメーションする",
       "Reset to default": "デフォルトに戻す",
+      "Reset all to default": "すべてデフォルトに戻す",
+      "Make static": "固定値にする",
+      "Make all static": "すべて固定値にする",
       Sequence: "アニメーションする",
+      "Sequence all": "すべてアニメーションする",
       //
       "Keyframe Track": "キーフレームトラック:",
       "Aggregate Keyframe Track": "複数キーフレームトラック:",
@@ -260,13 +294,18 @@ watchAndEdit("#pointer-root > div > div.sc-dcJsrY.cxwChO > ul", (node) => {
     });
   });
 });
-watchAndEdit(
-  "#pointer-root > div > div.sc-gEkIjz.exygSb.sc-bOhtcR.gXdrPR",
-  (node) => {
-    const seqLength = node.querySelector(".sc-fulCBj.gaIoHz");
-    const [matches, sec] = seqLength.textContent.match(
-      /Sequence length:\s+(.*?)s/
-    );
-    if (matches) seqLength.textContent = `上限: ${sec}秒`;
-  }
-);
+// p:nth-child(2)
+watchAndEdit("#pointer-root > div > div.sc-dcJsrY.cxwChO > div", (node) => {
+  [...node.childNodes].forEach((child) => {
+    Object.entries({
+      "This will create a JSON file with the state of your project. You can commit this file to your git repo and include it in your production bundle.":
+        "プロジェクトの状態を含む JSON ファイルをダウンロードします。",
+      "If your project uses assets, this will also create a zip file with all the assets that you can unpack in your public folder.":
+        "",
+      "Here is a quick guide on how to export to production.":
+        "Theatre.js の関連ページを開く",
+    }).forEach(([before, after]) => {
+      if (child.textContent === before) child.textContent = after;
+    });
+  });
+});
