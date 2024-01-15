@@ -2,6 +2,25 @@
 
 ツクール MZ 専用ムービーメーカー
 
+## エディタの起動
+
+```bash
+npm i
+npm run dev
+# http://127.0.0.1:5173/
+```
+
+### ゲーム画面解像度の変更方法
+
+- index.html の `main({ width, height })` の値を書き換えて変更してください。
+
+## プラグインの使用方法（予定）
+
+1. [ここ](https://cdn.jsdelivr.net/npm/@theatre/browser-bundles@0.7.0/dist/core-only.min.js) から Theatre.js をダウンロードし、`js/libs` に入れる。
+2. エディタで作成した JSON を `js/tween/` に入れる（ない場合作成する）。
+3. ツクールでプラグインを有効化する
+4. プラグインコマンドから「再生」を選ぶ
+
 ## 開発計画
 
 - まず pixi.js でゲームスクリーンとピクチャを再現する
