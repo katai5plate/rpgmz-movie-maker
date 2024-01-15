@@ -23,7 +23,7 @@ export default {
       },
       sequence: {
         subUnitsPerUnit: 30,
-        length: 10,
+        length: 2,
         type: "PositionalSequence",
         tracksByObject: {
           名刺: {
@@ -55,12 +55,12 @@ export default {
                 __debugName: '名刺:["pos","x"]',
                 keyframes: [
                   {
-                    id: "pDtCgSUmkO",
+                    id: "qmk8MJUybI",
                     position: 0,
                     connectedRight: true,
                     handles: [0.5, 1, 0.5, 0],
                     type: "bezier",
-                    value: 1034,
+                    value: 1057,
                   },
                   {
                     id: "jUlELruhrq",
@@ -82,26 +82,17 @@ export default {
             trackData: {
               IyfmbANeya: {
                 type: "BasicKeyframedTrack",
-                __debugName: '文章窓:["scale","ofs","x"]',
-                keyframes: [
-                  {
-                    id: "EhMYi7KxkY",
-                    position: 0,
-                    connectedRight: true,
-                    handles: [0.5, 1, 0.5, 0],
-                    type: "bezier",
-                    value: 0,
-                  },
-                ],
+                __debugName: '文章窓:["scale","per","x"]',
+                keyframes: [],
               },
               R7FwRPKMgS: {
                 type: "BasicKeyframedTrack",
-                __debugName: '文章窓:["scale","ofs","y"]',
+                __debugName: '文章窓:["scale","per","y"]',
                 keyframes: [],
               },
               POq1Rbj6V4: {
                 type: "BasicKeyframedTrack",
-                __debugName: '文章窓:["scale","xy"]',
+                __debugName: '文章窓:["scale","zoom"]',
                 keyframes: [
                   {
                     id: "vNDJbEZ5Wq",
@@ -123,9 +114,9 @@ export default {
               },
             },
             trackIdByPropPath: {
-              '["scale","ofs","x"]': "IyfmbANeya",
-              '["scale","ofs","y"]': "R7FwRPKMgS",
-              '["scale","xy"]': "POq1Rbj6V4",
+              '["scale","per","x"]': "IyfmbANeya",
+              '["scale","per","y"]': "R7FwRPKMgS",
+              '["scale","zoom"]': "POq1Rbj6V4",
             },
           },
           ボタン1: {
@@ -159,5 +150,5 @@ export default {
     },
   },
   definitionVersion: "0.4.0",
-  revisionHistory: ["yDNhHSHp2qYJjYDC"],
+  revisionHistory: ["1yN8lZRsZ0fauJoY", "yDNhHSHp2qYJjYDC"],
 };
