@@ -4,6 +4,7 @@ import demo from "./demo";
 import "./localize";
 import { Application, Container } from "pixi.js";
 import { Pictures } from "./sheets/Pictures";
+import { Variables } from "./sheets/Variables";
 
 export default ({ width, height }) => {
   const app = new Application({
@@ -74,6 +75,15 @@ export default ({ width, height }) => {
         pos: { x: 24, y: 264 },
       },
       { name: "名刺", href: "./pictures/meishi.png", pos: { x: 384, y: 72 } },
+    ],
+  });
+  new Variables({
+    project,
+    container,
+    list: [
+      { name: "整数", type: "INT", value: 10 },
+      { name: "実数", type: "FLOAT", value: 3.75 },
+      { name: "文字列", type: "TEXT", value: "あいうえお" },
     ],
   });
 };

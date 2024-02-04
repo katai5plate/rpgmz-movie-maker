@@ -7,7 +7,7 @@ export class TheatreSheetBase<P extends TheatreObjectPropsBase> {
   project: IProject;
   sheet: ISheet;
   children: Map<string, TheatreObjectBase<{}>>;
-  container?: Container;
+  container: Container;
   instantiate: (args: {
     self: TheatreSheetBase<P>;
     props: P;
@@ -28,7 +28,7 @@ export const makeSheet = <P extends TheatreObjectPropsBase>(
       list,
     }: {
       project: IProject;
-      container?: Container;
+      container: Container;
       list: P[];
     }) {
       super();
@@ -45,18 +45,8 @@ export const makeSheet = <P extends TheatreObjectPropsBase>(
     add(props: P) {
       const target = this.instantiate({ self: this, props });
       this.children.set(props.name, target);
-      if (this.container) {
-        if (!target.sprite) {
-          throw new Error("スプライトが見つかりません: " + props.name);
-        }
+      if (target.sprite) {
         this.container.addChild(target.sprite);
-      } else {
-        if (target.sprite) {
-          console.warn(
-            "コンテナが指定されているにも関わらずスプライトが設定されています:",
-            props.name
-          );
-        }
       }
     }
     remove(name: string) {

@@ -3,5 +3,5 @@ import { makeSheet } from "./maker";
 
 export const Pictures = makeSheet<PictureProps>(
   "ピクチャ",
-  ({ self, props }) => new Picture({ sheet: self.sheet, props })
+  ({ self: { sheet }, props }) => new Picture({ sheet, props })
 );
