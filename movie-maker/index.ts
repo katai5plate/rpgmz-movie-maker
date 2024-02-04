@@ -57,11 +57,23 @@ export default ({ width, height }) => {
   });
   // const sheetOptions = project.sheet("レイヤー", "プロジェクト");
 
-  new Pictures(project, container, [
-    { name: "文章窓", href: "./pictures/meswin.png", pos: { x: 0, y: 384 } },
-    { name: "ボタン1", href: "./pictures/button.png", pos: { x: 24, y: 24 } },
-    { name: "ボタン2", href: "./pictures/button.png", pos: { x: 24, y: 144 } },
-    { name: "ボタン3", href: "./pictures/button.png", pos: { x: 24, y: 264 } },
-    { name: "名刺", href: "./pictures/meishi.png", pos: { x: 384, y: 72 } },
-  ]);
+  new Pictures({
+    project,
+    container,
+    list: [
+      { name: "文章窓", href: "./pictures/meswin.png", pos: { x: 0, y: 384 } },
+      { name: "ボタン1", href: "./pictures/button.png", pos: { x: 24, y: 24 } },
+      {
+        name: "ボタン2",
+        href: "./pictures/button.png",
+        pos: { x: 24, y: 144 },
+      },
+      {
+        name: "ボタン3",
+        href: "./pictures/button.png",
+        pos: { x: 24, y: 264 },
+      },
+      { name: "名刺", href: "./pictures/meishi.png", pos: { x: 384, y: 72 } },
+    ],
+  });
 };
