@@ -4,7 +4,7 @@ import { TypeNumber, TypeString, makeObject } from "./maker";
 export interface VariableProps {
   name: string;
   type: "INT" | "FLOAT" | "TEXT";
-  value: number | string;
+  value?: number | string;
 }
 
 export const Variable = makeObject<
@@ -16,9 +16,11 @@ export const Variable = makeObject<
   obj: {
     value:
       props.type === "TEXT"
-        ? types.string(String(props.value), { label: "文字列" })
+        ? types.string(props.value ? String(props.value) : "", {
+            label: "文字列",
+          })
         : types.number(
-            Number(props.value),
+            typeof props.value === "number" ? Number(props.value) : 0,
             props.type === "INT" ? { nudgeMultiplier: 1 } : {}
           ),
   },

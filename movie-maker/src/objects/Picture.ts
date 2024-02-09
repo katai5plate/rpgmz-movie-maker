@@ -4,6 +4,7 @@ import { rgbToHex } from "../utils";
 import {
   TypeColor,
   TypeNumber,
+  compoundType,
   createStringLiteralType,
   makeObject,
 } from "./maker";
@@ -19,9 +20,11 @@ export interface PictureProps {
     grid?: number;
     x: number;
     y: number;
+    z: number;
     ofs?: {
       x?: number;
       y?: number;
+      z: number;
     };
   };
   scale?: {
@@ -57,7 +60,7 @@ const pictureOriginType = createStringLiteralType<PICTURE_ORIGIN>(
   "q"
 );
 const pictureBlendType = createStringLiteralType<PICTURE_BLEND_MODE>(
-  "ブレンドモード",
+  "合成",
   {
     NORMAL: "NORMAL",
     ADD: "ADD",
@@ -75,9 +78,11 @@ export const Picture = makeObject<
       grid: TypeNumber;
       x: TypeNumber;
       y: TypeNumber;
+      z: TypeNumber;
       ofs: {
         x: TypeNumber;
         y: TypeNumber;
+        z: TypeNumber;
       };
     };
     scale: {
@@ -94,33 +99,42 @@ export const Picture = makeObject<
 >("Picture", ({ props, self }) => ({
   obj: {
     origin: pictureOriginType(props.origin),
-    pos: {
+    pos: compoundType("位置", {
       grid: types.number(props.pos?.grid ?? 1, {
         range: [0, Infinity],
         nudgeMultiplier: 1,
+        label: "単位",
       }),
-      x: types.number(props.pos?.x ?? 200, { nudgeMultiplier: 1 }),
-      y: types.number(props.pos?.y ?? 200, { nudgeMultiplier: 1 }),
-      ofs: {
+      x: types.number(props.pos?.x ?? 0, { nudgeMultiplier: 1 }),
+      y: types.number(props.pos?.y ?? 0, { nudgeMultiplier: 1 }),
+      z: types.number(props.pos?.z ?? 0, { nudgeMultiplier: 1 }),
+      ofs: compoundType("＋", {
         x: types.number(props.pos?.ofs?.x ?? 0, { nudgeMultiplier: 1 }),
         y: types.number(props.pos?.ofs?.y ?? 0, { nudgeMultiplier: 1 }),
-      },
-    },
-    scale: {
-      zoom: types.number(props.scale?.zoom ?? 1, { range: [0, 10] }),
-      per: {
+        z: types.number(props.pos?.ofs?.z ?? 0, { nudgeMultiplier: 1 }),
+      }),
+    }),
+    scale: compoundType("拡大", {
+      zoom: types.number(props.scale?.zoom ?? 1, {
+        range: [0, 10],
+        label: "率",
+      }),
+      per: compoundType("×", {
         x: types.number(props.scale?.per?.x ?? 1, { range: [0, 1] }),
         y: types.number(props.scale?.per?.y ?? 1, { range: [0, 1] }),
-      },
-    },
-    blend: pictureBlendType(props.blend),
-    angle: props.angle ?? 0,
-    tint: types.rgba({
-      r: props.tint?.r ?? 1,
-      g: props.tint?.g ?? 1,
-      b: props.tint?.b ?? 1,
-      a: props.tint?.a ?? 1,
+      }),
     }),
+    blend: pictureBlendType(props.blend),
+    angle: types.number(props.angle ?? 0, { label: "角度" }),
+    tint: types.rgba(
+      {
+        r: props.tint?.r ?? 1,
+        g: props.tint?.g ?? 1,
+        b: props.tint?.b ?? 1,
+        a: props.tint?.a ?? 1,
+      },
+      { label: "色調" }
+    ),
   },
   onChange: (v) => {
     if (!self.sprite)
@@ -158,6 +172,7 @@ export const Picture = makeObject<
     }
     self.sprite.x = v.pos.grid * v.pos.x + v.pos.ofs.x;
     self.sprite.y = v.pos.grid * v.pos.y + v.pos.ofs.y;
+    self.sprite.zIndex = v.pos.z + v.pos.ofs.z;
     self.sprite.scale.set(
       v.scale.zoom * v.scale.per.x,
       v.scale.zoom * v.scale.per.y

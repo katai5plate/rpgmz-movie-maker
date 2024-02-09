@@ -23,7 +23,7 @@ watchAndEdit("#pointer-root > div > div.sc-dPZUQH.dCKgVu > div", (node) => {
   try {
     node.querySelector("a").textContent = "Theatre.js の関連ページを開く";
     node.querySelector("div > div:nth-child(2)").innerHTML =
-      "<u>インスペクタ</u>からピクチャを選択して、そのプロパティを確認してください。";
+      "<u>インスペクタ</u>から項目を選択して、そのプロパティを確認してください。";
   } catch {}
 });
 watchAndEdit(

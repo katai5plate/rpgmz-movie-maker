@@ -5,8 +5,17 @@ import { Application, Container } from "pixi.js";
 import { Pictures } from "./sheets/Pictures";
 import { Variables } from "./sheets/Variables";
 import { extension } from "./extends";
+import { loadProjectFile } from "./api";
 
-export default ({ width, height }) => {
+export default async ({ width, height }) => {
+  const queries = location.search
+    .slice(1)
+    .split("&")
+    .map((x) => x.split("="));
+  const queryState = queries.find(([k]) => k === "state")?.[1];
+  const state = queryState ? await loadProjectFile(queryState) : null;
+  if (state) document.title = "MZMM: " + queryState;
+
   const app = new Application({
     width,
     height,
@@ -21,38 +30,52 @@ export default ({ width, height }) => {
 
   studio.initialize();
 
+  // zIndex 調整用
   const container = new Container();
+  container.sortableChildren = true;
   app.stage.addChild(container);
 
-  const project = getProject("ムービーメーカー");
+  const project = getProject("インスペクタ", state ? { state } : {});
 
+  const objectLayer = state?.sheetsById?.["レイヤー"];
+  const objectNames = [
+    ...new Set([
+      ...Object.keys(objectLayer?.sequence?.tracksByObject ?? {}),
+      ...Object.keys(objectLayer?.staticOverrides?.byObject ?? {}),
+    ]),
+  ].sort();
+
+  const regexObjectNameToPicture = /^([^"]+): ([^"]+)\.png$/;
+  const objectPictures = objectNames
+    .filter((x) => regexObjectNameToPicture.test(x))
+    .map((name: string) => {
+      const filename = name.match(regexObjectNameToPicture)?.[2];
+      return { name, href: `./pictures/${filename}.png` };
+    }) as { name: string; href: string }[];
   new Pictures({
     project,
     container,
-    list: [
-      // { name: "文章窓", href: "./pictures/meswin.png", pos: { x: 0, y: 384 } },
-      // { name: "ボタン1", href: "./pictures/button.png", pos: { x: 24, y: 24 } },
-      // {
-      //   name: "ボタン2",
-      //   href: "./pictures/button.png",
-      //   pos: { x: 24, y: 144 },
-      // },
-      // {
-      //   name: "ボタン3",
-      //   href: "./pictures/button.png",
-      //   pos: { x: 24, y: 264 },
-      // },
-      // { name: "名刺", href: "./pictures/meishi.png", pos: { x: 384, y: 72 } },
-    ],
+    list: objectPictures,
   });
+
+  const regexObjectNameToVariable = /^([^"]+): (整数|実数|文字列)$/;
+  const objectVariables = objectNames
+    .filter((x) => regexObjectNameToVariable.test(x))
+    .map((name: string) => {
+      const type = { 整数: "INT", 実数: "FLOAT", 文字列: "TEXT" }[
+        name.match(regexObjectNameToPicture)?.[2] ?? ""
+      ] as unknown as "INT" | "FLOAT" | "TEXT";
+      return { name, type };
+    });
   new Variables({
     project,
     container,
-    list: [
-      // { name: "整数", type: "INT", value: 10 },
-      // { name: "実数", type: "FLOAT", value: 3.75 },
-      // { name: "文字列", type: "TEXT", value: "あいうえお" },
-    ],
+    list: objectVariables,
+    // list: [
+    //   { name: "分: 整数", type: "INT" },
+    //   { name: "秒: 実数", type: "FLOAT" },
+    //   { name: "字幕: 文字列", type: "TEXT" },
+    // ],
   });
 
   studio.extend(extension({ project, studio }));

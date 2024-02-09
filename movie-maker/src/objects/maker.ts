@@ -1,4 +1,9 @@
-import { ISheet, ISheetObject, types } from "@theatre/core";
+import {
+  ISheet,
+  ISheetObject,
+  UnknownShorthandCompoundProps,
+  types,
+} from "@theatre/core";
 import { Sprite } from "pixi.js";
 
 export interface TheatreObjectPropsBase {
@@ -45,5 +50,10 @@ export const createStringLiteralType =
     const test = modes[origin?.toLowerCase() || ""];
     if (origin && !test)
       throw new Error(`無効な${name}が指定されました: ${origin}`);
-    return types.stringLiteral(test ?? defaultValue, modes);
+    return types.stringLiteral(test ?? defaultValue, modes, { label: name });
   };
+
+export const compoundType = <T extends UnknownShorthandCompoundProps>(
+  label: string,
+  obj: T
+): T => types.compound(obj, { label }) as object as T;

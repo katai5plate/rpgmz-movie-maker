@@ -1,6 +1,8 @@
 import { IExtension } from "@theatre/studio";
 import { ExtensionProps } from "..";
 import { openFile } from "./openFile";
+import { saveProjectFile } from "../../api";
+import { saveFile } from "./saveFile";
 
 export const toolbars: (props: ExtensionProps) => IExtension["toolbars"] = (
   props
@@ -8,14 +10,7 @@ export const toolbars: (props: ExtensionProps) => IExtension["toolbars"] = (
   global(set, studio) {
     set([
       openFile(props),
-      {
-        type: "Icon",
-        title: "保存",
-        svgSource: "💾",
-        onClick: () => {
-          console.log(studio.createContentOfSaveFile("ムービーメーカー"));
-        },
-      },
+      saveFile(props),
       {
         type: "Icon",
         title: "ピクチャ追加",

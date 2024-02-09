@@ -3,7 +3,7 @@
     "レイヤー": {
       "staticOverrides": {
         "byObject": {
-          "名刺": {
+          "名刺: meishi.png": {
             "pos": {
               "y": 188,
               "x": 542
@@ -11,12 +11,33 @@
             "angle": -7,
             "origin": "s"
           },
-          "ボタン3": {
+          "ボタン3: button.png": {
             "tint": {
               "r": 1,
               "g": 1,
               "b": 1,
               "a": 0.53
+            },
+            "pos": {
+              "x": 24,
+              "y": 264
+            }
+          },
+          "文章窓: meswin.png": {
+            "pos": {
+              "y": 384
+            }
+          },
+          "ボタン1: button.png": {
+            "pos": {
+              "x": 24,
+              "y": 24
+            }
+          },
+          "ボタン2: button.png": {
+            "pos": {
+              "x": 24,
+              "y": 144
             }
           }
         }
@@ -26,22 +47,17 @@
         "length": 2,
         "type": "PositionalSequence",
         "tracksByObject": {
-          "名刺": {
+          "名刺: meishi.png": {
             "trackData": {
               "z85FF0s4Gh": {
                 "type": "BasicKeyframedTrack",
-                "__debugName": "名刺:[\"angle\"]",
+                "__debugName": "名刺: meishi.png:[\"angle\"]",
                 "keyframes": [
                   {
                     "id": "BDSS81Y0dL",
                     "position": 0,
                     "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
+                    "handles": [0.5, 1, 0.5, 0],
                     "type": "bezier",
                     "value": 388
                   },
@@ -50,10 +66,7 @@
                     "position": 1.467,
                     "connectedRight": true,
                     "handles": [
-                      0.11656441717791415,
-                      0.8637777777777778,
-                      0.5,
-                      0
+                      0.11656441717791415, 0.8637777777777778, 0.5, 0
                     ],
                     "type": "bezier",
                     "value": -14.278243555555562
@@ -62,18 +75,13 @@
               },
               "vT4IDuGOKL": {
                 "type": "BasicKeyframedTrack",
-                "__debugName": "名刺:[\"pos\",\"x\"]",
+                "__debugName": "名刺: meishi.png:[\"pos\",\"x\"]",
                 "keyframes": [
                   {
                     "id": "qmk8MJUybI",
                     "position": 0,
                     "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
+                    "handles": [0.5, 1, 0.5, 0],
                     "type": "bezier",
                     "value": 1057
                   },
@@ -81,12 +89,7 @@
                     "id": "jUlELruhrq",
                     "position": 1.467,
                     "connectedRight": true,
-                    "handles": [
-                      0,
-                      1.08,
-                      0.5,
-                      0
-                    ],
+                    "handles": [0, 1.08, 0.5, 0],
                     "type": "bezier",
                     "value": 569
                   }
@@ -98,32 +101,27 @@
               "[\"pos\",\"x\"]": "vT4IDuGOKL"
             }
           },
-          "文章窓": {
+          "文章窓: meswin.png": {
             "trackData": {
               "IyfmbANeya": {
                 "type": "BasicKeyframedTrack",
-                "__debugName": "文章窓:[\"scale\",\"per\",\"x\"]",
+                "__debugName": "文章窓: meswin.png:[\"scale\",\"per\",\"x\"]",
                 "keyframes": []
               },
               "R7FwRPKMgS": {
                 "type": "BasicKeyframedTrack",
-                "__debugName": "文章窓:[\"scale\",\"per\",\"y\"]",
+                "__debugName": "文章窓: meswin.png:[\"scale\",\"per\",\"y\"]",
                 "keyframes": []
               },
               "POq1Rbj6V4": {
                 "type": "BasicKeyframedTrack",
-                "__debugName": "文章窓:[\"scale\",\"zoom\"]",
+                "__debugName": "文章窓: meswin.png:[\"scale\",\"zoom\"]",
                 "keyframes": [
                   {
                     "id": "vNDJbEZ5Wq",
                     "position": 0,
                     "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
+                    "handles": [0.5, 1, 0.5, 0],
                     "type": "bezier",
                     "value": 0
                   },
@@ -131,12 +129,7 @@
                     "id": "08w2s9JnAz",
                     "position": 0.433,
                     "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
+                    "handles": [0.5, 1, 0.5, 0],
                     "type": "bezier",
                     "value": 1
                   }
@@ -149,22 +142,17 @@
               "[\"scale\",\"zoom\"]": "POq1Rbj6V4"
             }
           },
-          "ボタン1": {
+          "ボタン1: button.png": {
             "trackData": {
               "xhn4agpu2T": {
                 "type": "BasicKeyframedTrack",
-                "__debugName": "ボタン1:[\"tint\"]",
+                "__debugName": "ボタン1: button.png:[\"tint\"]",
                 "keyframes": [
                   {
                     "id": "q4cofyx5Sh",
                     "position": 0,
                     "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
+                    "handles": [0.5, 1, 0.5, 0],
                     "type": "bezier",
                     "value": {
                       "r": 0.9882352941176471,
@@ -186,6 +174,8 @@
   },
   "definitionVersion": "0.4.0",
   "revisionHistory": [
+    "KNt4rHQmzYeZDa1Y",
+    "Sh_Da-xEv9samkEt",
     "tpTPP1z5MP8QbXP8",
     "1yN8lZRsZ0fauJoY",
     "yDNhHSHp2qYJjYDC"
