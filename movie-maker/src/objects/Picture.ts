@@ -49,15 +49,15 @@ export interface PictureProps {
 const pictureOriginType = createStringLiteralType<PICTURE_ORIGIN>(
   "原点",
   {
-    q: "┌ top left",
-    w: "↑ top center",
-    e: "┐ top right",
-    a: "← center left",
-    s: "・ center",
-    d: "→ center right",
-    z: "└ bottom left",
-    x: "↓ bottom center",
-    c: "┘ bottom right",
+    q: "┌ 左上",
+    w: "↑ 上端",
+    e: "┐ 右上",
+    a: "← 左端",
+    s: "・ 中央",
+    d: "→ 右端",
+    z: "└ 左下",
+    x: "↓ 下端",
+    c: "┘ 右下",
   },
   "q"
 );

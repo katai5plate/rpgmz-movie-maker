@@ -15,10 +15,9 @@ export const initModal = () => {
     background-color: rgba(0,0,0,0.4);
   }
   .modal-content {
-    background-color: gray;
+    background-color: rgba(32, 34, 38, 0.75);
     margin: 15% auto;
     padding: 20px;
-    border: 1px solid #888;
     width: 80%;
   }
   .close {
