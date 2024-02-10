@@ -1,49 +1,49 @@
 import { IExtension } from "@theatre/studio";
-import { ExtensionProps } from "..";
+import { gs } from "../../globalState";
 import { openFile } from "./openFile";
-import { saveProjectFile } from "../../api";
+import { addPicture, removePicture } from "./picture";
 import { saveFile } from "./saveFile";
+import { cleanupUnuseDataFromSavedata } from "../../utils";
 
-export const toolbars: (props: ExtensionProps) => IExtension["toolbars"] = (
-  props
-) => ({
-  global(set, studio) {
+export const toolbars: IExtension["toolbars"] = {
+  global(set) {
     set([
-      openFile(props),
-      saveFile(props),
       {
         type: "Icon",
-        title: "ピクチャ追加",
-        svgSource: "P+",
-        onClick: () => console.log("ここからピクチャ追加"),
+        title: "新規作成",
+        svgSource: "📄",
+        onClick: () => window.open("?"),
       },
-      {
-        type: "Icon",
-        title: "ピクチャ削除",
-        svgSource: "P-",
-        onClick: () => console.log("ここからピクチャ削除"),
-      },
+      openFile,
+      saveFile,
+      addPicture,
+      removePicture,
       {
         type: "Icon",
         title: "変数追加",
         svgSource: "V+",
-        onClick: () => console.log("ここから変数追加"),
+        onClick: () => alert("ここから変数追加できるようにする予定"),
       },
       {
         type: "Icon",
         title: "変数削除",
         svgSource: "V-",
-        onClick: () => console.log("ここから変数削除"),
+        onClick: () => alert("ここから変数削除できるようにする予定"),
       },
       {
         type: "Icon",
-        title: "Example Button",
+        title: "デバッグ",
         svgSource: "？",
         onClick: () => {
-          console.log(props.project);
+          const save = gs.studio.createContentOfSaveFile("インスペクタ");
+          console.log({
+            gs,
+            save,
+            optimizedSave: cleanupUnuseDataFromSavedata(save),
+          });
         },
       },
     ]);
     return () => console.log("toolbar removed!");
   },
-});
+};

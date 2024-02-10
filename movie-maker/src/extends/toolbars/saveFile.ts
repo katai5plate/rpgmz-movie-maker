@@ -1,10 +1,9 @@
 import { ToolConfig } from "@theatre/studio";
-import { ExtensionProps } from "..";
 import { saveProjectFile } from "../../api";
+import { gs } from "../../globalState";
+import { cleanupUnuseDataFromSavedata } from "../../utils";
 
-export const saveFile: (props: ExtensionProps) => ToolConfig = ({
-  studio,
-}) => ({
+export const saveFile: ToolConfig = {
   type: "Icon",
   title: "保存",
   svgSource: "💾",
@@ -13,10 +12,18 @@ export const saveFile: (props: ExtensionProps) => ToolConfig = ({
       "ファイル名を入力してください",
       Date.now().toString()
     );
-    await saveProjectFile(
+    if (!filename) return;
+    const res = await saveProjectFile(
       filename + ".json",
-      studio.createContentOfSaveFile("インスペクタ")
+      cleanupUnuseDataFromSavedata(
+        gs.studio.createContentOfSaveFile("インスペクタ")
+      )
     );
+    if (res instanceof Error) {
+      return alert(
+        "エラーが発生しました。`npm run api` を実行していない可能性があります。"
+      );
+    }
     alert("完了！");
   },
-});
+};

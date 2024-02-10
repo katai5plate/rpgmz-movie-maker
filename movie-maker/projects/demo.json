@@ -1,45 +1,20 @@
 {
   "sheetsById": {
-    "レイヤー": {
+    "シート": {
       "staticOverrides": {
         "byObject": {
           "名刺: meishi.png": {
-            "pos": {
-              "y": 188,
-              "x": 542
-            },
+            "pos": { "set": { "y": 188, "x": 542 } },
             "angle": -7,
             "origin": "s"
           },
           "ボタン3: button.png": {
-            "tint": {
-              "r": 1,
-              "g": 1,
-              "b": 1,
-              "a": 0.53
-            },
-            "pos": {
-              "x": 24,
-              "y": 264
-            }
+            "tint": { "r": 1, "g": 1, "b": 1, "a": 0.53 },
+            "pos": { "set": { "x": 24, "y": 264 } }
           },
-          "文章窓: meswin.png": {
-            "pos": {
-              "y": 384
-            }
-          },
-          "ボタン1: button.png": {
-            "pos": {
-              "x": 24,
-              "y": 24
-            }
-          },
-          "ボタン2: button.png": {
-            "pos": {
-              "x": 24,
-              "y": 144
-            }
-          }
+          "文章窓: meswin.png": { "pos": { "set": { "y": 384 } } },
+          "ボタン1: button.png": { "pos": { "set": { "x": 24, "y": 24 } } },
+          "ボタン2: button.png": { "pos": { "set": { "x": 24, "y": 144 } } }
         }
       },
       "sequence": {
@@ -75,7 +50,7 @@
               },
               "vT4IDuGOKL": {
                 "type": "BasicKeyframedTrack",
-                "__debugName": "名刺: meishi.png:[\"pos\",\"x\"]",
+                "__debugName": "名刺: meishi.png:[\"pos\",\"set\",\"x\"]",
                 "keyframes": [
                   {
                     "id": "qmk8MJUybI",
@@ -98,7 +73,7 @@
             },
             "trackIdByPropPath": {
               "[\"angle\"]": "z85FF0s4Gh",
-              "[\"pos\",\"x\"]": "vT4IDuGOKL"
+              "[\"pos\",\"set\",\"x\"]": "vT4IDuGOKL"
             }
           },
           "文章窓: meswin.png": {
@@ -164,20 +139,12 @@
                 ]
               }
             },
-            "trackIdByPropPath": {
-              "[\"tint\"]": "xhn4agpu2T"
-            }
+            "trackIdByPropPath": { "[\"tint\"]": "xhn4agpu2T" }
           }
         }
       }
     }
   },
   "definitionVersion": "0.4.0",
-  "revisionHistory": [
-    "KNt4rHQmzYeZDa1Y",
-    "Sh_Da-xEv9samkEt",
-    "tpTPP1z5MP8QbXP8",
-    "1yN8lZRsZ0fauJoY",
-    "yDNhHSHp2qYJjYDC"
-  ]
+  "revisionHistory": []
 }

@@ -1,3 +1,5 @@
+import { gs } from "./globalState";
+
 export const rgbToHex = ({ r, g, b }) =>
   (Math.round(r * 255) << 16) |
   (Math.round(g * 255) << 8) |
@@ -38,4 +40,27 @@ export const watchAndEdit = (selector, editFunction) => {
       node.querySelectorAll(selector).forEach(editFunction);
     }
   });
+};
+
+export const cleanupUnuseDataFromSavedata = (data) => {
+  const result = JSON.parse(JSON.stringify(data));
+  const existNames = [...gs.pictures.children.keys()];
+
+  // 未使用オブジェクトを削除
+  const sheet = result?.sheetsById?.["シート"];
+  const byo = sheet?.staticOverrides?.byObject;
+  const tbo = sheet?.sequence?.tracksByObject;
+  if (byo)
+    Object.keys(byo).forEach((key) => {
+      if (!existNames.includes(key)) delete byo[key];
+    });
+  if (tbo)
+    Object.keys(tbo).forEach((key) => {
+      if (!existNames.includes(key)) delete tbo[key];
+    });
+
+  // 巻き戻しログを削除
+  result.revisionHistory = [];
+
+  return result;
 };

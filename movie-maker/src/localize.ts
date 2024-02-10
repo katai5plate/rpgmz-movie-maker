@@ -29,7 +29,7 @@ watchAndEdit("#pointer-root > div > div.sc-dPZUQH.dCKgVu > div", (node) => {
 watchAndEdit(
   "#pointer-root > div > div.sc-dPZUQH.dCKgVu > div.sc-lnPyaJ.gtHpBQ > div > div > button",
   (node) => {
-    node.textContent = "JSON ファイルとして保存";
+    node.textContent = "デバッグ用ステートを出力";
   }
 );
 
@@ -62,7 +62,7 @@ watchAndEdit("#pointer-root > div > div.sc-dcJsrY.cxwChO > div", (node) => {
   [...node.childNodes].forEach((child) => {
     Object.entries({
       "This will create a JSON file with the state of your project. You can commit this file to your git repo and include it in your production bundle.":
-        "プロジェクトの状態を含む JSON ファイルをダウンロードします。",
+        "クリーニングされていない生の作業ファイルをダウンロードします。",
       "If your project uses assets, this will also create a zip file with all the assets that you can unpack in your public folder.":
         "",
       "Here is a quick guide on how to export to production.":

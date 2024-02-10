@@ -6,6 +6,7 @@ import { Pictures } from "./sheets/Pictures";
 import { Variables } from "./sheets/Variables";
 import { extension } from "./extends";
 import { loadProjectFile } from "./api";
+import { gs } from "./globalState";
 
 export default async ({ width, height }) => {
   const queries = location.search
@@ -13,31 +14,51 @@ export default async ({ width, height }) => {
     .split("&")
     .map((x) => x.split("="));
   const queryState = queries.find(([k]) => k === "state")?.[1];
-  const state = queryState ? await loadProjectFile(queryState) : null;
-  if (state) document.title = "MZMM: " + queryState;
+  gs.projectState = queryState ? await loadProjectFile(queryState) : null;
+  if (gs.projectState) {
+    if (gs.projectState instanceof Error) {
+      document.title = "MZMM: 読込エラー";
+      return alert(
+        "エラーが発生しました。`npm run api` を実行していないか、許可されていません。"
+      );
+    }
+    document.title = "MZMM: " + queryState;
+  }
 
-  const app = new Application({
+  gs.app = new Application({
     width,
     height,
     background: "#1099bb",
   });
 
-  document.body.appendChild(app.view as HTMLCanvasElement);
+  document.body.appendChild(gs.app.view as HTMLCanvasElement);
 
   // オートセーブ無効化
   const pendingData = Object.keys(localStorage).find((x) => /theatre/.test(x));
   if (pendingData) localStorage.removeItem(pendingData);
 
-  studio.initialize();
+  gs.studio = studio;
+  gs.studio.initialize();
 
   // zIndex 調整用
-  const container = new Container();
-  container.sortableChildren = true;
-  app.stage.addChild(container);
+  gs.container = new Container();
+  gs.container.sortableChildren = true;
+  gs.app.stage.addChild(gs.container);
 
-  const project = getProject("インスペクタ", state ? { state } : {});
+  gs.project = getProject(
+    "インスペクタ",
+    gs.projectState
+      ? { state: gs.projectState }
+      : {
+          state: {
+            sheetsById: {},
+            definitionVersion: "0.4.0",
+            revisionHistory: [],
+          },
+        }
+  );
 
-  const objectLayer = state?.sheetsById?.["レイヤー"];
+  const objectLayer = gs.projectState?.sheetsById?.["シート"];
   const objectNames = [
     ...new Set([
       ...Object.keys(objectLayer?.sequence?.tracksByObject ?? {}),
@@ -52,9 +73,8 @@ export default async ({ width, height }) => {
       const filename = name.match(regexObjectNameToPicture)?.[2];
       return { name, href: `./pictures/${filename}.png` };
     }) as { name: string; href: string }[];
-  new Pictures({
-    project,
-    container,
+
+  gs.pictures = new Pictures({
     list: objectPictures,
   });
 
@@ -67,9 +87,7 @@ export default async ({ width, height }) => {
       ] as unknown as "INT" | "FLOAT" | "TEXT";
       return { name, type };
     });
-  new Variables({
-    project,
-    container,
+  gs.variables = new Variables({
     list: objectVariables,
     // list: [
     //   { name: "分: 整数", type: "INT" },
@@ -78,5 +96,5 @@ export default async ({ width, height }) => {
     // ],
   });
 
-  studio.extend(extension({ project, studio }));
+  gs.studio.extend(extension);
 };

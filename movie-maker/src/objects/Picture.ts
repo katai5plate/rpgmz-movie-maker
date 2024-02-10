@@ -18,9 +18,11 @@ export interface PictureProps {
   origin?: PICTURE_ORIGIN;
   pos?: {
     grid?: number;
-    x: number;
-    y: number;
-    z: number;
+    set?: {
+      x: number;
+      y: number;
+      z: number;
+    };
     ofs?: {
       x?: number;
       y?: number;
@@ -76,9 +78,11 @@ export const Picture = makeObject<
     origin: ReturnType<typeof pictureOriginType>;
     pos: {
       grid: TypeNumber;
-      x: TypeNumber;
-      y: TypeNumber;
-      z: TypeNumber;
+      set: {
+        x: TypeNumber;
+        y: TypeNumber;
+        z: TypeNumber;
+      };
       ofs: {
         x: TypeNumber;
         y: TypeNumber;
@@ -103,11 +107,13 @@ export const Picture = makeObject<
       grid: types.number(props.pos?.grid ?? 1, {
         range: [0, Infinity],
         nudgeMultiplier: 1,
-        label: "単位",
+        label: "□",
       }),
-      x: types.number(props.pos?.x ?? 0, { nudgeMultiplier: 1 }),
-      y: types.number(props.pos?.y ?? 0, { nudgeMultiplier: 1 }),
-      z: types.number(props.pos?.z ?? 0, { nudgeMultiplier: 1 }),
+      set: compoundType("＝", {
+        x: types.number(props.pos?.set?.x ?? 0, { nudgeMultiplier: 1 }),
+        y: types.number(props.pos?.set?.y ?? 0, { nudgeMultiplier: 1 }),
+        z: types.number(props.pos?.set?.z ?? 0, { nudgeMultiplier: 1 }),
+      }),
       ofs: compoundType("＋", {
         x: types.number(props.pos?.ofs?.x ?? 0, { nudgeMultiplier: 1 }),
         y: types.number(props.pos?.ofs?.y ?? 0, { nudgeMultiplier: 1 }),
@@ -170,9 +176,9 @@ export const Picture = makeObject<
       default:
         break;
     }
-    self.sprite.x = v.pos.grid * v.pos.x + v.pos.ofs.x;
-    self.sprite.y = v.pos.grid * v.pos.y + v.pos.ofs.y;
-    self.sprite.zIndex = v.pos.z + v.pos.ofs.z;
+    self.sprite.x = v.pos.grid * v.pos.set.x + v.pos.ofs.x;
+    self.sprite.y = v.pos.grid * v.pos.set.y + v.pos.ofs.y;
+    self.sprite.zIndex = v.pos.set.z + v.pos.ofs.z;
     self.sprite.scale.set(
       v.scale.zoom * v.scale.per.x,
       v.scale.zoom * v.scale.per.y

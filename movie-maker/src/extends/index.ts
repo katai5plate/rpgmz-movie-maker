@@ -1,16 +1,12 @@
-import { IProject } from "@theatre/core";
-import { IExtension, IStudio } from "@theatre/studio";
-import { toolbars } from "./toolbars";
+import { IExtension } from "@theatre/studio";
 import { initModal } from "./modal";
+import { toolbars } from "./toolbars";
 
 initModal();
 
-export interface ExtensionProps {
-  studio: IStudio;
-  project: IProject;
-}
+export interface ExtensionProps {}
 
-export const extension: (props: ExtensionProps) => IExtension = (props) => ({
+export const extension: IExtension = {
   id: "UI",
-  toolbars: toolbars(props),
-});
+  toolbars,
+};

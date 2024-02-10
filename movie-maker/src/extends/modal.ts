@@ -32,6 +32,28 @@ export const initModal = () => {
     color: black;
     cursor: pointer;
   }
+
+  .gallery {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: center;
+    padding: 20px;
+  }
+  .gallery-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .gallery-item img {
+    width: 100px;
+    height: auto;
+    margin-bottom: 8px;
+  }
+  .gallery-item span {
+    text-align: center;
+    font-size: 14px;
+  }
 `;
   document.head.appendChild(style);
 
@@ -48,12 +70,12 @@ export const initModal = () => {
   document.body.appendChild(modal);
 
   (modal.querySelector(".close") as HTMLSpanElement).onclick = function () {
-    modal.style.display = "none";
+    closeModal();
   };
 
   window.onclick = function (event) {
     if (event.target === modal) {
-      modal.style.display = "none";
+      closeModal();
     }
   };
 };
@@ -66,4 +88,10 @@ export const openModal = (
     title;
   fn(modal.querySelector(".modal-body") as HTMLDivElement);
   modal.style.display = "block";
+};
+
+export const closeModal = () => {
+  modal.style.display = "none";
+  (modal.querySelector(".modal-title") as HTMLHeadingElement).innerHTML = "";
+  (modal.querySelector(".modal-body") as HTMLDivElement).innerHTML = "";
 };

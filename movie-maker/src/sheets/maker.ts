@@ -1,5 +1,6 @@
-import { IProject, ISheet, ISheetObject } from "@theatre/core";
-import { Container, Sprite } from "pixi.js";
+import { IProject, ISheet } from "@theatre/core";
+import { Container } from "pixi.js";
+import { gs } from "../globalState";
 import { TheatreObjectBase, TheatreObjectPropsBase } from "../objects/maker";
 
 export class TheatreSheetBase<P extends TheatreObjectPropsBase> {
@@ -12,6 +13,8 @@ export class TheatreSheetBase<P extends TheatreObjectPropsBase> {
     self: TheatreSheetBase<P>;
     props: P;
   }) => TheatreObjectBase<{}>;
+  add(_props: P) {}
+  remove(_name: string) {}
 }
 
 export const makeSheet = <P extends TheatreObjectPropsBase>(
@@ -22,20 +25,12 @@ export const makeSheet = <P extends TheatreObjectPropsBase>(
   }) => TheatreObjectBase<{}>
 ) =>
   class TheatreSheet extends TheatreSheetBase<P> {
-    constructor({
-      project,
-      container,
-      list,
-    }: {
-      project: IProject;
-      container: Container;
-      list: P[];
-    }) {
+    constructor({ list }: { list: P[] }) {
       super();
       this.name = name;
-      this.project = project;
-      this.sheet = project.sheet("レイヤー", this.name);
-      this.container = container;
+      this.project = gs.project;
+      this.sheet = gs.project.sheet("シート", this.name);
+      this.container = gs.container;
       this.children = new Map();
       this.instantiate = instantiate;
       list.forEach((props: P) => {
@@ -53,6 +48,9 @@ export const makeSheet = <P extends TheatreObjectPropsBase>(
       const target = this.children.get(name);
       if (!target)
         throw new Error(`指定の${this.name}が見つかりません: ${name}`);
-      this.sheet.detachObject(target.obj.address.objectKey);
+      this.sheet.detachObject(name);
+      target.unsubscribe();
+      if (target.sprite) gs.container.removeChild(target.sprite);
+      this.children.delete(name);
     }
   };
