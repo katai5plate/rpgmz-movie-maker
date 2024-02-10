@@ -8,6 +8,7 @@
 npm i
 npm run dev
 # http://127.0.0.1:5173/
+npm run api
 ```
 
 ### ゲーム画面解像度の変更方法
