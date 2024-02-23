@@ -1,4 +1,4 @@
-let modal: HTMLDivElement;
+import { gs } from "../globalState";
 
 export const initModal = () => {
   const style = document.createElement("style");
@@ -12,7 +12,7 @@ export const initModal = () => {
     width: 100%;
     height: 100%;
     overflow: auto;
-    background-color: rgba(0,0,0,0.4);
+    background-color: rgba(0, 0, 0, 0.4);
   }
   .modal-content {
     background-color: rgba(32, 34, 38, 0.75);
@@ -56,9 +56,9 @@ export const initModal = () => {
 `;
   document.head.appendChild(style);
 
-  modal = document.createElement("div");
-  modal.setAttribute("class", "modal");
-  modal.innerHTML = `
+  gs.modal = document.createElement("div");
+  gs.modal.setAttribute("class", "modal");
+  gs.modal.innerHTML = `
   <div class="modal-content">
     <span class="close">&times;</span>
     <h2 class="modal-title"></h2>
@@ -66,14 +66,14 @@ export const initModal = () => {
     <div class="modal-body"></div>
   </div>
 `;
-  document.body.appendChild(modal);
+  document.body.appendChild(gs.modal);
 
-  (modal.querySelector(".close") as HTMLSpanElement).onclick = function () {
+  (gs.modal.querySelector(".close") as HTMLSpanElement).onclick = function () {
     closeModal();
   };
 
   window.onclick = function (event) {
-    if (event.target === modal) {
+    if (event.target === gs.modal) {
       closeModal();
     }
   };
@@ -83,14 +83,14 @@ export const openModal = (
   title: string,
   fn: (node: HTMLDivElement) => void
 ) => {
-  (modal.querySelector(".modal-title") as HTMLHeadingElement).textContent =
+  (gs.modal.querySelector(".modal-title") as HTMLHeadingElement).textContent =
     title;
-  fn(modal.querySelector(".modal-body") as HTMLDivElement);
-  modal.style.display = "block";
+  fn(gs.modal.querySelector(".modal-body") as HTMLDivElement);
+  gs.modal.style.display = "block";
 };
 
 export const closeModal = () => {
-  modal.style.display = "none";
-  (modal.querySelector(".modal-title") as HTMLHeadingElement).innerHTML = "";
-  (modal.querySelector(".modal-body") as HTMLDivElement).innerHTML = "";
+  gs.modal.style.display = "none";
+  (gs.modal.querySelector(".modal-title") as HTMLHeadingElement).innerHTML = "";
+  (gs.modal.querySelector(".modal-body") as HTMLDivElement).innerHTML = "";
 };

@@ -12,7 +12,7 @@ export const Variable = makeObject<
   {
     value: TypeNumber | TypeString;
   }
->("Picture", ({ props }) => ({
+>("Variable", ({ props }) => ({
   obj: {
     value:
       props.type === "TEXT"

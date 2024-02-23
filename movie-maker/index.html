@@ -19,13 +19,9 @@
     canvas {
       z-index: 1;
       position: absolute;
-      margin: auto;
-      top: 0px;
-      left: 0px;
-      right: 0px;
-      bottom: 0px;
-      width: 640px;
-      height: 480px;
+      margin: none;
+      left: 220px;
+      top: 50px;
       touch-action: none;
       cursor: inherit;
     }
@@ -35,10 +31,7 @@
 <body>
   <script type="module">
     import main from "./src/index.ts"
-    main({
-      width: 816,
-      height: 624,
-    })
+    main()
   </script>
 </body>
 

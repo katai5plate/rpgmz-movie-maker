@@ -7,27 +7,24 @@ import { Variables } from "./sheets/Variables";
 import { extension } from "./extends";
 import { loadProjectFile } from "./api";
 import { gs } from "./globalState";
+import { getQueries } from "./utils";
 
-export default async ({ width, height }) => {
-  const queries = location.search
-    .slice(1)
-    .split("&")
-    .map((x) => x.split("="));
-  const queryState = queries.find(([k]) => k === "state")?.[1];
-  gs.projectState = queryState ? await loadProjectFile(queryState) : null;
-  if (gs.projectState) {
+export default async () => {
+  const q = getQueries("state", "width", "height");
+  if (q.state) {
+    gs.projectState = q.state ? (await loadProjectFile(q.state)).data : null;
     if (gs.projectState instanceof Error) {
       document.title = "MZMM: 読込エラー";
       return alert(
         "エラーが発生しました。`npm run api` を実行していないか、許可されていません。"
       );
     }
-    document.title = "MZMM: " + queryState;
+    document.title = "MZMM: " + q.state;
   }
 
   gs.app = new Application({
-    width,
-    height,
+    width: Number(q.width) || 816,
+    height: Number(q.height) || 624,
     background: "#1099bb",
   });
 
@@ -74,9 +71,7 @@ export default async ({ width, height }) => {
       return { name, href: `./pictures/${filename}.png` };
     }) as { name: string; href: string }[];
 
-  gs.pictures = new Pictures({
-    list: objectPictures,
-  });
+  gs.pictures = new Pictures({ list: objectPictures });
 
   const regexObjectNameToVariable = /^([^"]+): (整数|実数|文字列)$/;
   const objectVariables = objectNames

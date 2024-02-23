@@ -64,3 +64,14 @@ export const cleanupUnuseDataFromSavedata = (data) => {
 
   return result;
 };
+
+export const getQueries = <T extends string>(
+  ...keys: T[]
+): Partial<Record<T, string>> => {
+  const queryParams = new URLSearchParams(location.search);
+  return keys.reduce((acc, key) => {
+    const value = queryParams.get(key);
+    if (value !== null) acc[key] = value;
+    return acc;
+  }, {} as Partial<Record<T, string>>);
+};
